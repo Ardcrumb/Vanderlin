@@ -3881,6 +3881,7 @@
 #include "code\modules\mob\living\carbon\human\npc\human_soldiers\bog_deserters.dm"
 #include "code\modules\mob\living\carbon\human\npc\human_soldiers\deranged.dm"
 #include "code\modules\mob\living\carbon\human\npc\human_soldiers\drow_raiders.dm"
+#include "code\modules\mob\living\carbon\human\npc\human_soldiers\grenzel_soldiers.dm"
 #include "code\modules\mob\living\carbon\human\npc\human_soldiers\highwaymen.dm"
 #include "code\modules\mob\living\carbon\human\npc\human_soldiers\northern_milita.dm"
 #include "code\modules\mob\living\carbon\human\npc\human_soldiers\searaider.dm"

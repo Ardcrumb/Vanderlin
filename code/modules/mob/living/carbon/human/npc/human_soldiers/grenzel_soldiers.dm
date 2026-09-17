@@ -1,43 +1,18 @@
-//these lads are the main defenders of the fort, they're supposed to be tough to fight, and use halberds.
-/datum/outfit/job/human/northern/bog_deserters/proc/add_random_deserter_cloak(mob/living/carbon/human/H)
-	var/random_deserter_cloak = rand(1,4)
-	switch(random_deserter_cloak)
-		if(1)
-			cloak = /obj/item/clothing/cloak/stabard/mercenary
-		if(2)
-			cloak = /obj/item/clothing/cloak/stabard/colored/dungeon
-		if(3)
-			cloak = /obj/item/clothing/armor/brigandine/coatplates
+GLOBAL_LIST_INIT(grenzel_aggro, file2list("strings/rt/grenzelsoldieraggrolines.txt"))
+GLOBAL_LIST_INIT(grenzelpriest_aggro, file2list("strings/rt/grenzelpriestaggrolines.txt"))
 
-/datum/outfit/job/human/northern/bog_deserters/proc/add_random_deserter_weapon(mob/living/carbon/human/H)
-	var/random_deserter_weapon = rand(1,3)
+/datum/outfit/job/human/northern/grenzel_soldiers/proc/add_random_grenzel_weapon(mob/living/carbon/human/H)
+	var/random_deserter_weapon = rand(1,2)
 	switch(random_deserter_weapon)
 		if(1)
-			r_hand = /obj/item/weapon/sword/iron
+			r_hand = /obj/item/weapon/sword/sabre
 			l_hand = /obj/item/weapon/shield/heater
 		if(2)
-			r_hand = /obj/item/weapon/polearm/spear
-		if(3)
-			r_hand = /obj/item/weapon/axe
+			r_hand = /obj/item/weapon/polearm/halberd
 
-/datum/outfit/job/human/northern/bog_deserters/proc/add_random_deserter_weapon_hard(mob/living/carbon/human/H)
-	var/add_random_deserter_weapon_hard = rand(1,4)
-	switch(add_random_deserter_weapon_hard)
-		if(1)
-			r_hand = /obj/item/weapon/sword/iron
-			l_hand = /obj/item/weapon/shield/heater
-		if(2)
-			r_hand = /obj/item/weapon/mace/warhammer
-			l_hand = /obj/item/weapon/shield/heater
-		if(3)
-			r_hand = /obj/item/weapon/axe
-		if(4)
-			r_hand = /obj/item/weapon/flail
-			l_hand = /obj/item/weapon/shield/heater
-
-/datum/outfit/job/human/northern/bog_deserters/proc/add_random_deserter_beltl_stuff(mob/living/carbon/human/H)
-	var/add_random_deserter_beltl_stuff = rand(1,7)
-	switch(add_random_deserter_beltl_stuff)
+/datum/outfit/job/human/northern/grenzel_soldiers/proc/add_random_grenzel_beltl_stuff(mob/living/carbon/human/H)
+	var/add_random_grenzel_beltl_stuff = rand(1,7)
+	switch(add_random_grenzel_beltl_stuff)
 		if(1)
 			beltl = /obj/item/storage/belt/pouch/food
 		if(2)
@@ -53,9 +28,9 @@
 		if(7)
 			beltl = /obj/item/weapon/scabbard/sword
 
-/datum/outfit/job/human/northern/bog_deserters/proc/add_random_deserter_beltr_stuff(mob/living/carbon/human/H)
-	var/add_random_deserter_beltr_stuff = rand(1,7)
-	switch(add_random_deserter_beltr_stuff)
+/datum/outfit/job/human/northern/grenzel_soldiers/proc/add_random_grenzel_beltr_stuff(mob/living/carbon/human/H)
+	var/add_random_grenzel_beltr_stuff = rand(1,7)
+	switch(add_random_grenzel_beltr_stuff)
 		if(1)
 			beltr = /obj/item/storage/belt/pouch/food
 		if(2)
@@ -71,19 +46,9 @@
 		if(7)
 			beltr = /obj/item/weapon/scabbard/sword
 
-/datum/outfit/job/human/northern/bog_deserters/proc/add_random_deserter_armor_hard(mob/living/carbon/human/H)
-	var/random_deserter_armor_hard = rand(1,3)
-	switch(random_deserter_armor_hard)
-		if(1)
-			armor = /obj/item/clothing/armor/brigandine/light
-		if(2)
-			armor = /obj/item/clothing/armor/cuirass/iron
-		if(3)
-			armor = /obj/item/clothing/armor/plate/fluted
-
-/mob/living/carbon/human/species/human/northern/bog_deserters
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers
 	ai_controller = /datum/ai_controller/human_npc
-	faction = list(FACTION_VIKINGS)
+	faction = list(FACTION_VIKINGS) //used for all hostile NPCs
 	ambushable = FALSE
 	cmode = 1
 	setparrytime = 30
@@ -95,33 +60,25 @@
 	headprice = 16
 	var/is_silent = FALSE /// Determines whether or not we will scream our funny lines at people.
 
-
-/mob/living/carbon/human/species/human/northern/bog_deserters/ambush
-	wander = TRUE
-
-/mob/living/carbon/human/species/human/northern/bog_deserters/Initialize()
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 	is_silent = TRUE
 
-
-/mob/living/carbon/human/species/human/northern/bog_deserters/after_creation()
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers/after_creation()
 	..()
-	job = "Garrison Deserter"
+	job = "Grenzelhoft Soldier"
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC) //For when they're just kinda patrolling around/ambushes
-	equipOutfit(new /datum/outfit/job/human/northern/bog_deserters)
-	var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
-	if(organ_eyes)
-		organ_eyes.eye_color = pick("27becc", "35cc27", "000000")
+	equipOutfit(new /datum/outfit/job/human/northern/grenzel_soldiers)
 	update_body()
+	SEND_SIGNAL(src, COMSIG_MOB_MODIFY_AGGRO_LINES, GLOB.grenzel_aggro, TRUE)
 
-/datum/attribute_holder/sheet/job/npc/bog_deserters
+/datum/attribute_holder/sheet/job/npc/grenzel_soldiers
 	attribute_variance = list(
 		STAT_STRENGTH = list(2, 4),
 		STAT_CONSTITUTION = list(1, 3)
@@ -140,100 +97,101 @@
 		/datum/attribute/skill/misc/athletics = 30,
 	)
 
-/datum/outfit/job/human/northern/bog_deserters/pre_equip(mob/living/carbon/human/H)
-	..()
+/datum/outfit/job/human/northern/grenzel_soldiers/pre_equip(mob/living/carbon/human/H)
 	//Body Stuff
-	H.set_eye_color("#27becc","#27becc")
-	H.set_hair_color("#61310f")
-	H.set_facial_hair_color(H.get_hair_color())
 	if(H.gender == FEMALE)
-		H.set_hair_style(/datum/sprite_accessory/hair/head/messy)
+		H.set_accessory_type(hairf, null, src)
 	else
-		H.set_hair_style(/datum/sprite_accessory/hair/head/messy)
-		H.set_facial_hair_style(/datum/sprite_accessory/hair/facial/manly)
-	//skill Stuff
-
+		H.set_accessory_type(hairm, null, src)
+		H.set_accessory_type(beard, null, src)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	H.attributes?.add_sheet(/datum/attribute_holder/sheet/job/npc/bog_deserters)
-	//Chest Gear
-	add_random_deserter_cloak(H)
-	shirt = /obj/item/clothing/armor/gambeson
-	armor = /obj/item/clothing/armor/chainmail/hauberk/iron
-	//Head Gear
-	neck = /obj/item/clothing/neck/coif
-	head = /obj/item/clothing/head/helmet/kettle/iron
-	//wrist Gear
-	gloves = /obj/item/clothing/gloves/chain/iron
-	wrists = /obj/item/clothing/wrists/bracers/iron
-	//Lower Gear
+	H.attributes?.add_sheet(/datum/attribute_holder/sheet/job/npc/grenzel_soldiers)
+	armor = /obj/item/clothing/armor/cuirass/grenzelhoft
+	shirt = /obj/item/clothing/shirt/grenzelhoft
+	neck = /obj/item/clothing/neck/chaincoif
+	head = /obj/item/clothing/head/helmet/sallet
+	gloves = /obj/item/clothing/gloves/angle/grenzel
+	wrists = /obj/item/clothing/wrists/bracers/leather
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/chainlegs/iron
-	shoes = /obj/item/clothing/shoes/boots/armor
-	//Weapons
-	add_random_deserter_weapon(H)
-	add_random_deserter_beltl_stuff(H)
-	add_random_deserter_beltr_stuff(H)
+	pants = /obj/item/clothing/pants/grenzelpants
+	shoes = /obj/item/clothing/shoes/rare/grenzelhoft
+	add_random_grenzel_weapon(H)
+	add_random_grenzel_beltl_stuff(H)
+	add_random_grenzel_beltr_stuff(H)
 
-/mob/living/carbon/human/species/human/northern/bog_deserters/better_gear
-	faction = list("viking", "station")
-	ambushable = FALSE
-	cmode = 1
-	setparrytime = 30
-	flee_in_pain = TRUE
-	a_intent = INTENT_HELP
-	d_intent = INTENT_PARRY
-	possible_mmb_intents = list(INTENT_BITE, INTENT_JUMP, INTENT_KICK)
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers/grenzel_priest
 	headprice = 20
 
-/mob/living/carbon/human/species/human/northern/bog_deserters/better_gear/ambush
-	wander = TRUE
-
-/mob/living/carbon/human/species/human/northern/bog_deserters/better_gear/after_creation()
-	job = "Garrison Deserter"
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers/grenzel_priest/after_creation()
+	..()
+	job = "Grenzelhoft Priest"
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC) //For when they're just kinda patrolling around/ambushes
-	equipOutfit(new /datum/outfit/job/human/northern/bog_deserters/better_gear)
-	var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
-	if(organ_eyes)
-		organ_eyes.eye_color = pick("27becc", "35cc27", "000000")
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	equipOutfit(new /datum/outfit/job/human/northern/grenzel_soldiers)
 	update_body()
+	SEND_SIGNAL(src, COMSIG_MOB_MODIFY_AGGRO_LINES, GLOB.grenzelpriest_aggro, TRUE)
 
-/datum/outfit/job/human/northern/bog_deserters/better_gear/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/human/northern/grenzel_soldiers/grenzel_priest/pre_equip(mob/living/carbon/human/H)
 	//Body Stuff
-	H.set_eye_color("#27becc","#27becc")
-	H.set_hair_color("#61310f")
-	H.set_facial_hair_color(H.get_hair_color())
 	if(H.gender == FEMALE)
-		H.set_hair_style(/datum/sprite_accessory/hair/head/messy)
+		H.set_accessory_type(hairf, null, src)
 	else
-		H.set_hair_style(/datum/sprite_accessory/hair/head/messy)
-		H.set_facial_hair_style(/datum/sprite_accessory/hair/facial/manly)
-	//skill Stuff
+		H.set_accessory_type(hairm, null, src)
+		H.set_accessory_type(beard, null, src)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	H.attributes?.add_sheet(/datum/attribute_holder/sheet/job/npc/bog_deserters)
-	//Chest Gear
-	shirt = /obj/item/clothing/armor/chainmail/hauberk/iron
-	add_random_deserter_armor_hard(H)
-	add_random_deserter_cloak(H)
-	//Head Gear
-	neck = /obj/item/clothing/neck/chaincoif/iron
-	head = /obj/item/clothing/head/helmet/heavy/frog
-	//wrist Gear
-	gloves = /obj/item/clothing/gloves/plate/iron
-	wrists = /obj/item/clothing/wrists/bracers/iron
-	//Lower Gear
+	H.attributes?.add_sheet(/datum/attribute_holder/sheet/job/npc/grenzel_soldiers)
+	shirt = /obj/item/clothing/shirt/undershirt/priest
+	neck = /obj/item/clothing/neck/psycross/silver
+	face = /obj/item/clothing/face/facemask/psydonmask
+	head = /obj/item/clothing/head/roguehood/psydon/confessor
+	pants = /obj/item/clothing/pants/trou/leather
+	shoes = /obj/item/clothing/shoes/psydonboots
+	r_hand = /obj/item/weapon/polearm/woodstaff/quarterstaff/silver
+
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers/grenzel_knight
+	headprice = 32
+
+/mob/living/carbon/human/species/human/northern/grenzel_soldiers/grenzel_knight/after_creation()
+	..()
+	job = "Grenzelhoft Knight"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
+	equipOutfit(new /datum/outfit/job/human/northern/grenzel_knight)
+	update_body()
+	SEND_SIGNAL(src, COMSIG_MOB_MODIFY_AGGRO_LINES, GLOB.grenzel_aggro, TRUE)
+
+/datum/outfit/job/human/northern/grenzel_soldiers/grenzel_knight/pre_equip(mob/living/carbon/human/H)
+	//Body Stuff
+	if(H.gender == FEMALE)
+		H.set_accessory_type(hairf, null, src)
+	else
+		H.set_accessory_type(hairm, null, src)
+		H.set_accessory_type(beard, null, src)
+	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	H.attributes?.add_sheet(/datum/attribute_holder/sheet/job/npc/quest_miniboss)
+	armor = /obj/item/clothing/armor/plate/full
+	shirt = /obj/item/clothing/armor/chainmail/hauberk
+	neck = /obj/item/clothing/neck/bevor
+	head = /obj/item/clothing/head/rare/grenzelplate
+	gloves = /obj/item/clothing/gloves/plate/blk
+	wrists = /obj/item/clothing/wrists/bracers
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/chainlegs/iron
-	shoes = /obj/item/clothing/shoes/boots/armor
-	//Weapons
-	add_random_deserter_weapon_hard(H)
-	add_random_deserter_beltl_stuff(H)
-	add_random_deserter_beltr_stuff(H)
+	pants = /obj/item/clothing/pants/platelegs/blk
+	shoes = /obj/item/clothing/shoes/boots/rare/grenzelplate
+	ring = /obj/item/clothing/ring/signet/psy
+	r_hand = /obj/item/weapon/sword/long/greatsword/zwei/steel
