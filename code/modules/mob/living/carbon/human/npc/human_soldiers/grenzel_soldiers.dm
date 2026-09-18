@@ -99,11 +99,6 @@ GLOBAL_LIST_INIT(grenzelpriest_aggro, file2list("strings/rt/grenzelpriestaggroli
 
 /datum/outfit/job/human/northern/grenzel_soldiers/pre_equip(mob/living/carbon/human/H)
 	//Body Stuff
-	if(H.gender == FEMALE)
-		H.set_accessory_type(hairf, null, src)
-	else
-		H.set_accessory_type(hairm, null, src)
-		H.set_accessory_type(beard, null, src)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -139,11 +134,6 @@ GLOBAL_LIST_INIT(grenzelpriest_aggro, file2list("strings/rt/grenzelpriestaggroli
 
 /datum/outfit/job/human/northern/grenzel_soldiers/grenzel_priest/pre_equip(mob/living/carbon/human/H)
 	//Body Stuff
-	if(H.gender == FEMALE)
-		H.set_accessory_type(hairf, null, src)
-	else
-		H.set_accessory_type(hairm, null, src)
-		H.set_accessory_type(beard, null, src)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -175,11 +165,6 @@ GLOBAL_LIST_INIT(grenzelpriest_aggro, file2list("strings/rt/grenzelpriestaggroli
 
 /datum/outfit/job/human/northern/grenzel_soldiers/grenzel_knight/pre_equip(mob/living/carbon/human/H)
 	//Body Stuff
-	if(H.gender == FEMALE)
-		H.set_accessory_type(hairf, null, src)
-	else
-		H.set_accessory_type(hairm, null, src)
-		H.set_accessory_type(beard, null, src)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
