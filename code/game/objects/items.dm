@@ -704,7 +704,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			var/mob/living/carbon/C = user
 			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 				can_handle_hot = TRUE
-			else if(HAS_TRAIT(C, TRAIT_RESISTHEAT) || HAS_TRAIT(C, TRAIT_RESISTHEATHANDS))
+			else if(HAS_TRAIT(C, TRAIT_RESISTHEAT) || HAS_TRAIT(C, TRAIT_RESISTHEATHANDS) || HAS_TRAIT(C, TRAIT_DEVIL_MARKED_ABADDON))
 				can_handle_hot = TRUE
 		else
 			can_handle_hot = TRUE
@@ -1674,6 +1674,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 					if(alch_skill >= SKILL_LEVEL_EXPERT)
 						. += span_notice(" Smells faintly of [smell].")
 
+
 /**
  * Returns the atom(either itself or an internal module) that will interact/attack the target on behalf of us
  * For example an object can have different `tool_behaviours` (e.g borg omni tool) but will return an internal reference of that tool to attack for us
@@ -1839,7 +1840,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(istype(examine_highlight_type))
 		return list(examine_highlight_type, examine_highlight_type.item_examine_desc)
 	var/datum/examine_highlight/examine_type = GLOB.examine_highlights[examine_highlight_type]
-	if(examine_type.required_trait && !HAS_TRAIT(user, examine_type.required_trait))
+	if(!isobserver(user) && examine_type.required_trait && !HAS_TRAIT(user, examine_type.required_trait))
+		return null
+	if(!isobserver(user) && examine_type.required_mind_trait && !HAS_MIND_TRAIT(user, examine_type.required_mind_trait))
 		return null
 	return list(GLOB.examine_highlights[examine_highlight_type], examine_type.item_examine_desc)
 

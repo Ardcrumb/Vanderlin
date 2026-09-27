@@ -114,7 +114,7 @@
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0
-	blade_class = BCLASS_PUNCH
+	blade_class = BCLASS_BLUNT
 
 /obj/item/weapon/knife/scissors/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.cmode)
@@ -363,6 +363,7 @@
 	name = "laced dagger"
 	desc = "Whispers of bliss seep deeper than the blade."
 	icon_state = "baothadagger"
+	examine_highlight_type = /datum/examine_highlight/heresy_alarming/baotha
 
 /obj/item/weapon/knife/dagger/steel/inhumen/baotha/Initialize(mapload)
 	. = ..()
@@ -372,11 +373,13 @@
 	name = "vicious dagger"
 	desc = "A chipped and serrated blade designed with only one purpose. Blood."
 	icon_state = "graggardagger"
+	examine_highlight_type = /datum/examine_highlight/heresy_alarming/graggar
 
 /obj/item/weapon/knife/dagger/steel/inhumen/matthios
 	name = "gilded knife"
 	desc = "Wealth with function."
 	icon_state = "matthiosknife"
+	examine_highlight_type = /datum/examine_highlight/heresy_alarming/matthios
 
 /obj/item/weapon/knife/dagger/steel/inhumen/zizo
 	name = "darksteel dagger"
@@ -384,6 +387,7 @@
 	icon_state = "zizodagger"
 	melting_material = /datum/material/avantyne
 	max_integrity = INTEGRITY_DAGGER * INTEGRITY_MOD_DARKSTEEL
+	examine_highlight_type = /datum/examine_highlight/heresy_alarming/darksteel
 
 //................ Silver Dagger ............... //
 /obj/item/weapon/knife/dagger/silver
@@ -444,6 +448,7 @@
 	name = "orphan's dream"
 	desc = "A blade of darkened bloodsteel, the hopes and dreams of a forgotten soul..."
 	max_integrity = INTEGRITY_DAGGER * INTEGRITY_MOD_BLOODSTEEL * INTEGRITY_SPECIAL_BONUS
+	examine_highlight_type = /datum/examine_highlight/heresy_alarming/bloodmagic/relic
 
 //................ Psydonian Dagger ............... //
 /obj/item/weapon/knife/dagger/silver/psydon
@@ -469,6 +474,7 @@
 	item_weight = 200 GRAMS
 	max_integrity = INTEGRITY_DAGGER * INTEGRITY_MOD_STEEL * INTEGRITY_SPECIAL_BONUS
 	pickpocket_difficulty = SKILL_RANK_MASTER
+	examine_highlight_type = /datum/examine_highlight/heresy_alarming/graggar
 
 /obj/item/weapon/knife/dagger/steel/inhumen/profane/examine(mob/user)
 	. = ..()
@@ -536,7 +542,7 @@
 			if(!(target.dna?.species.id in RACES_PLAYER_ALL))
 				to_chat(user, span_warning("I can't steal this face!"))
 				return
-			var/datum/beam/transfer_beam = user.Beam(target, icon_state = "drain_life", time = 6 SECONDS)
+			var/datum/beam/transfer_beam = user.Beam(target, icon_state = "drain_mana", time = 6 SECONDS)
 
 			playsound(
 				user,
