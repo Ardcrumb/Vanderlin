@@ -328,7 +328,7 @@
 /area/under/tomb/indoors/magic)
 "va" = (
 /obj/structure/table/stone_small,
-/obj/effect/dungeon_loot_spawner/medium,
+/obj/effect/dungeon_loot_spawner/high,
 /turf/open/floor/church/gold,
 /area/under/tomb/indoors/church)
 "vc" = (
@@ -340,7 +340,7 @@
 /area/under/tomb/indoors/magic)
 "ve" = (
 /obj/structure/table/church/m,
-/obj/effect/dungeon_loot_spawner/low,
+/obj/effect/dungeon_loot_spawner/medium,
 /turf/open/floor/church/violet,
 /area/under/tomb/indoors/church)
 "vU" = (
